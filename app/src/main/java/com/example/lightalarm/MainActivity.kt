@@ -13,6 +13,9 @@ import android.widget.TimePicker
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.annotation.RequiresApi
+import java.io.BufferedReader
+import java.net.HttpURLConnection
+import java.net.URL
 import java.util.*
 
 class MainActivity : ComponentActivity() {
@@ -84,4 +87,31 @@ class MainActivity : ComponentActivity() {
             Toast.makeText(this, "Alarm set for: ${timePicker.hour}:${timePicker.minute}", Toast.LENGTH_SHORT).show()
         }
     }
+
+    fun sendGet() {
+        val url = URL("http://www.google.com/")
+
+        with(url.openConnection() as HttpURLConnection) {
+            requestMethod = "GET"  // optional default is GET
+
+            println("\nSent 'GET' request to URL : $url; Response Code : $responseCode")
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                inputStream.bufferedReader().use {
+                    it.lines().forEach { line ->
+                        println(line)
+                    }
+                }
+            } else {
+                val reader: BufferedReader = inputStream.bufferedReader()
+                var line: String? = reader.readLine()
+                while (line != null) {
+                    System.out.println(line)
+                    line = reader.readLine()
+                }
+                reader.close()
+            }
+        }
+    }
+
 }
