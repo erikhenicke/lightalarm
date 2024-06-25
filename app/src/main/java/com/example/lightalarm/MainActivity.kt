@@ -96,16 +96,14 @@ class MainActivity : ComponentActivity() {
     }
 
     fun sendGet() {
-            val url = URL("https://www.google.com/")
-
-            val okHttpClient = OkHttpClient()
-            try {
-                val parsedResponse = parseResponse(okHttpClient.newCall(createRequest()).execute())
-                Log.v("GET", parsedResponse)
-            } catch (e: Exception) {
-                Log.e("GET-Stacktrace", e.stackTrace.toString())
-                e.message?.let { Log.e("GET", it) }
-            }
+        val okHttpClient = OkHttpClient()
+        try {
+            val parsedResponse = parseResponse(okHttpClient.newCall(createRequest()).execute())
+            Log.v("GET", parsedResponse)
+        } catch (e: Exception) {
+            Log.e("GET-Stacktrace", e.stackTrace.toString())
+            e.message?.let { Log.e("GET", it) }
+        }
     }
 
 
